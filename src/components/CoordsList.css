@@ -1,0 +1,47 @@
+.coordsContainer .coordsBox {
+  z-index: 2;
+  position: relative;
+  background-color: rgb(60, 59, 60);
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.coordsContainer .coordsList {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.coordItem {
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: gray;
+  margin-top: 10px;
+}
+
+.coordsList .priorityCol {
+  flex: 3;
+  font-weight: bold;
+  padding-right: 10px;
+  width: max-content;
+  max-width: 70px;
+}
+
+.titleCol {
+  flex: 1;
+  color: #f0f2f5;
+  overflow-wrap: break-word;
+}
+
+.onlinedIcon {
+  color: #f0f2f5;
+}
+
+.onlinedIcon:hover {
+  color: #555;
+  cursor: pointer;
+}

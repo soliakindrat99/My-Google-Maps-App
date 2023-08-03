@@ -1,0 +1,20 @@
+.coordsFilter {
+  background-color: #555;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  padding: 15px 15px 0 15px;
+  text-align: left;
+  font-size: 22px;
+  position: relative;
+  width: 40%;
+}
+
+.coordsFilter .formLabel {
+  color: #fff;
+}
+
+.coordsFilter .selectPriority {
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 4px;
+}

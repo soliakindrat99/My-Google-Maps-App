@@ -1,0 +1,35 @@
+.coordsContainer .formContainer {
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  background-color: #f0f2f5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.formContainer h4 {
+  margin-bottom: 10px;
+  text-align: center;
+  color: rgb(45, 45, 45);
+  font-weight: 600;
+}
+
+.formContainer p {
+  margin-bottom: 10px;
+  text-align: center;
+  color: rgb(50, 49, 49);
+}
+
+.formContainer .coordsForm {
+  display: flex;
+  align-items: left;
+}
+
+.coordsForm .selectPriority {
+  margin-bottom: 24px;
+}
+
+.coordsForm .inputTitle {
+  margin-bottom: 24px;
+}

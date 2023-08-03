@@ -1,0 +1,15 @@
+.mapContainer .coordsContainer {
+  position: absolute;
+  z-index: 1;
+  width: 50%;
+  height: 80%;
+  overflow: auto;
+  overflow-x: hidden;
+  background-color: #555;
+  margin-top: 5%;
+  margin-left: 1%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
