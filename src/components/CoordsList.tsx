@@ -21,7 +21,7 @@ const CoordsList = (props: any) => {
 
   const onSelectCoord = (coord: { lat: number; lng: number }) => {
     parentCallbackSelectedCoord(coord);
-  }
+  };
 
   return (
     <Box className="coordsBox">
@@ -30,13 +30,15 @@ const CoordsList = (props: any) => {
         {filteredCoords &&
           filteredCoords.map((coord: any) => {
             return (
-              <ListItem className="coordItem" key={coord.id} onClick={() => onSelectCoord(coord.coord)}>
+              <ListItem
+                className="coordItem"
+                key={coord.id}
+                onClick={() => onSelectCoord(coord.coord)}
+              >
                 <ListItemText className="priorityCol" sx={getPriorityColor(coord.priority)}>
                   {coord.priority}
                 </ListItemText>
-                <ListItemText className="titleCol">
-                  {coord.title} {coord.coord.lat} {coord.coord.lng}
-                </ListItemText>
+                <ListItemText className="titleCol">{coord.title}</ListItemText>
                 <IconButton title="Delete" onClick={() => deleteCoord(coord.id)}>
                   <DeleteOutlinedIcon className="onlinedIcon" />
                 </IconButton>
