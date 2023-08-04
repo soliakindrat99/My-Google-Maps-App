@@ -10,10 +10,9 @@
   flex-direction: column;
 }
 
-.coordsContainer .coordsList {
+.coordsList {
   list-style: none;
   padding: 0;
-  width: 100%;
 }
 
 .coordItem {
@@ -21,9 +20,10 @@
   border-radius: 4px;
   border-color: gray;
   margin-top: 10px;
+  cursor: pointer;
 }
 
-.coordsList .priorityCol {
+.priorityCol {
   flex: 3;
   font-weight: bold;
   padding-right: 10px;
@@ -31,7 +31,7 @@
   max-width: 70px;
 }
 
-.titleCol {
+.coordItem .titleCol {
   flex: 1;
   color: #f0f2f5;
   overflow-wrap: break-word;

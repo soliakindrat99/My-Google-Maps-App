@@ -7,7 +7,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import './CoordsList.css';
 
 const CoordsList = (props: any) => {
-  const { coords = [], deleteCoord = () => {} } = props;
+  const { coords = [], deleteCoord = () => {}, parentCallbackSelectedCoord = () => {} } = props;
   const [filteredPriority, setFilteredPriority] = useState('All');
 
   const filterChangeHandler = (selectedPriority: string) => {
@@ -19,6 +19,10 @@ const CoordsList = (props: any) => {
     else return true;
   });
 
+  const onSelectCoord = (coord: { lat: number; lng: number }) => {
+    parentCallbackSelectedCoord(coord);
+  }
+
   return (
     <Box className="coordsBox">
       <CoordsFilter selected={filteredPriority} onChangeFilter={filterChangeHandler} />
@@ -26,11 +30,13 @@ const CoordsList = (props: any) => {
         {filteredCoords &&
           filteredCoords.map((coord: any) => {
             return (
-              <ListItem className="coordItem" key={coord.id}>
+              <ListItem className="coordItem" key={coord.id} onClick={() => onSelectCoord(coord.coord)}>
                 <ListItemText className="priorityCol" sx={getPriorityColor(coord.priority)}>
                   {coord.priority}
                 </ListItemText>
-                <ListItemText className="titleCol">{coord.title} {coord.coord.lat}  {coord.coord.lng}</ListItemText>
+                <ListItemText className="titleCol">
+                  {coord.title} {coord.coord.lat} {coord.coord.lng}
+                </ListItemText>
                 <IconButton title="Delete" onClick={() => deleteCoord(coord.id)}>
                   <DeleteOutlinedIcon className="onlinedIcon" />
                 </IconButton>

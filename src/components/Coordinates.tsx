@@ -5,7 +5,7 @@ import CoordsList from './CoordsList';
 import './Coordinates.css';
 
 const Coordinates = (props: any) => {
-  const { clickedCoord = {} } = props;
+  const { clickedCoord = {}, parentCallbackSelectedCoord = () => {} } = props;
 
   const [coords, setCoords] = useState<
     { id: number; priority: string; title: string; coord: { lat: number; lng: number } }[]
@@ -55,7 +55,7 @@ const Coordinates = (props: any) => {
         setNewTitle={setNewTitle}
         submitCoord={submitCoord}
       />
-      <CoordsList coords={coords} deleteCoord={deleteCoord} />
+      <CoordsList coords={coords} deleteCoord={deleteCoord} parentCallbackSelectedCoord={parentCallbackSelectedCoord}/>
     </Box>
   );
 };

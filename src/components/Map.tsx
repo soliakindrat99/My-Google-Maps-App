@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 const libraries: Libraries = ['places'];
 
 const Map = (props: any) => {
-  const {parentCallbackClickedCoord = () => {}} = props;
+  const {parentCallbackClickedCoord = () => {}, selectedCoord = {}} = props;
   const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY || '';
   const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number } | null>(null);
 
@@ -39,7 +39,7 @@ const Map = (props: any) => {
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
-      center={center}
+      center={clickedCoords && selectedCoord ? selectedCoord : center}
       zoom={18}
       onClick={handleMapClick}
       mapTypeId="satellite"
@@ -50,6 +50,12 @@ const Map = (props: any) => {
           position={{ lat: clickedCoords.lat, lng: clickedCoords.lng }}
           title={clickedCoords.lat + ', ' + clickedCoords.lng}
         />
+      )}
+      {selectedCoord && (
+        <Marker
+        position={{ lat: selectedCoord.lat, lng: selectedCoord.lng }}
+        title={selectedCoord.lat + ', ' + selectedCoord.lng}
+      />
       )}
     </GoogleMap>
   );
