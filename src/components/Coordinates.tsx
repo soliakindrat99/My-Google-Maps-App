@@ -4,7 +4,12 @@ import FormCoordinates from './FormCoordinates';
 import CoordsList from './CoordsList';
 import './Coordinates.css';
 
-const Coordinates = (props: any) => {
+interface coordinatesProps {
+  clickedCoord : { lat: number, lng: number}  | null,
+  parentCallbackSelectedCoord : (arg: { lat: number, lng: number}  | null) => void
+}
+
+const Coordinates = (props: coordinatesProps) => {
   const { clickedCoord = {}, parentCallbackSelectedCoord = () => {} } = props;
 
   const [coords, setCoords] = useState<

@@ -4,9 +4,15 @@ import { Box } from '@mui/material';
 
 const libraries: Libraries = ['places'];
 
-const Map = (props: any) => {
-  const {parentCallbackClickedCoord = () => {}, selectedCoord = {}} = props;
+interface mapProps {
+  parentCallbackClickedCoord: (srg: { lat: number; lng: number } | null) => void;
+  selectedCoord: { lat: number; lng: number } | null;
+}
+
+const Map = (props: mapProps) => {
+  const { parentCallbackClickedCoord = () => {}, selectedCoord = { lat: 0, lng: 0 } } = props;
   const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY || '';
+
   const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -53,9 +59,9 @@ const Map = (props: any) => {
       )}
       {selectedCoord && (
         <Marker
-        position={{ lat: selectedCoord.lat, lng: selectedCoord.lng }}
-        title={selectedCoord.lat + ', ' + selectedCoord.lng}
-      />
+          position={{ lat: selectedCoord.lat, lng: selectedCoord.lng }}
+          title={selectedCoord.lat + ', ' + selectedCoord.lng}
+        />
       )}
     </GoogleMap>
   );

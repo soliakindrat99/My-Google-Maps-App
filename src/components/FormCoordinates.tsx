@@ -12,7 +12,16 @@ import './FormCoordinates.css';
 import { getPriorityColor } from '../helpers/unils';
 import priority from '../helpers/constants';
 
-const formCoordinates = (props: any) => {
+interface formCoordinatesProps {
+  isClickedCoord: boolean;
+  newPriority: string;
+  setNewPriority: (arg: string) => void;
+  newTitle: string;
+  setNewTitle: (arg: string) => void;
+  submitCoord: (arg: object) => void;
+}
+
+const formCoordinates = (props: formCoordinatesProps) => {
   const {
     isClickedCoord = false,
     newPriority = '',

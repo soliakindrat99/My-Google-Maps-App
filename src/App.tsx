@@ -18,8 +18,11 @@ const App: React.FC = () => {
 
   return (
     <Box className="mapContainer">
-      <Coordinates clickedCoord={clickedCoord} parentCallbackSelectedCoord={handleCallbackSelectedCoord}/>
-      <Map parentCallbackClickedCoord={handleCallbackClickedCoord} selectedCoord={selectedCoord}/>
+      <Coordinates
+        clickedCoord={clickedCoord}
+        parentCallbackSelectedCoord={handleCallbackSelectedCoord}
+      />
+      <Map parentCallbackClickedCoord={handleCallbackClickedCoord} selectedCoord={selectedCoord} />
     </Box>
   );
 };
