@@ -9,10 +9,10 @@ import {
   Typography,
 } from '@mui/material';
 import './FormCoordinates.css';
-import { getPriorityColor } from '../helpers/utils';
-import priority from '../helpers/constants';
+import { getPriorityColor } from '../../helpers/utils';
+import priority from '../../helpers/constants';
 
-interface formCoordinatesProps {
+interface IFormCoordinatesProps {
   isClickedCoord: boolean;
   newPriority: string;
   setNewPriority: (arg: string) => void;
@@ -21,7 +21,7 @@ interface formCoordinatesProps {
   submitCoord: (arg: object) => void;
 }
 
-const formCoordinates = (props: formCoordinatesProps) => {
+const formCoordinates = (props: IFormCoordinatesProps) => {
   const {
     isClickedCoord = false,
     newPriority = '',

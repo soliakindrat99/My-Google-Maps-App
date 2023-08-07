@@ -1,23 +1,20 @@
 import { useState } from 'react';
-import { GoogleMap, Marker, useLoadScript, Libraries } from '@react-google-maps/api';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { Box } from '@mui/material';
 
-const libraries: Libraries = ['places'];
-
-interface mapProps {
-  parentCallbackClickedCoord: (srg: { lat: number; lng: number } | null) => void;
-  selectedCoord: { lat: number; lng: number } | null;
+interface IMapProps {
+  setClickedCoordOnMap: (srg: { lat: number; lng: number } | null) => void;
+  clickedCoordInList: { lat: number; lng: number } | null;
 }
 
-const Map = (props: mapProps) => {
-  const { parentCallbackClickedCoord = () => {}, selectedCoord = { lat: 0, lng: 0 } } = props;
+const Map = (props: IMapProps) => {
+  const { setClickedCoordOnMap = () => {}, clickedCoordInList = { lat: 0, lng: 0 } } = props;
   const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY || '';
 
   const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: apiKey,
-    libraries,
   });
 
   const mapContainerStyle = {
@@ -35,7 +32,7 @@ const Map = (props: mapProps) => {
     const lng = event.latLng?.lng();
     if (lat !== undefined && lng !== undefined) {
       setClickedCoords({ lat, lng });
-      parentCallbackClickedCoord({ lat: lat, lng: lng });
+      setClickedCoordOnMap({ lat: lat, lng: lng });
     }
   };
 
@@ -45,7 +42,7 @@ const Map = (props: mapProps) => {
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
-      center={clickedCoords && selectedCoord ? selectedCoord : center}
+      center={clickedCoords && clickedCoordInList ? clickedCoordInList : center}
       zoom={18}
       onClick={handleMapClick}
       mapTypeId="satellite"
@@ -56,13 +53,13 @@ const Map = (props: mapProps) => {
           position={{ lat: clickedCoords.lat, lng: clickedCoords.lng }}
           title={clickedCoords.lat + ', ' + clickedCoords.lng}
           options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }}
-          visible={!selectedCoord || (clickedCoords ? true : false)}
+          visible={!clickedCoordInList || (clickedCoords ? true : false)}
         />
       )}
-      {selectedCoord && (
+      {clickedCoordInList && (
         <Marker
-          position={{ lat: selectedCoord.lat, lng: selectedCoord.lng }}
-          title={selectedCoord.lat + ', ' + selectedCoord.lng}
+          position={{ lat: clickedCoordInList.lat, lng: clickedCoordInList.lng }}
+          title={clickedCoordInList.lat + ', ' + clickedCoordInList.lng}
           options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' }}
         />
       )}

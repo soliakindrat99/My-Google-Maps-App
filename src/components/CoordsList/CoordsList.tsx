@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import { getPriorityColor } from '../helpers/utils';
-import CoordsFilter from './CoordsFilter';
-import Coordinates from './Coordinates';
+import { getPriorityColor } from '../../helpers/utils';
+import CoordsFilter from '../CoordsFilter/CoordsFilter';
 import { Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import './CoordsList.css';
 
-interface coordsListProps {
-  coords: Coordinates[];
+interface ICoordsListProps {
+  coords: { id: number; priority: string; title: string; coord: { lat: number; lng: number }}[];
   deleteCoord: (arg: number) => void;
-  parentCallbackSelectedCoord: (arg: { lat: number; lng: number } | null) => void;
+  setClickedCoordInList: (arg: { lat: number; lng: number } | null) => void;
 }
 
-const CoordsList = (props: coordsListProps) => {
-  const { coords = [], deleteCoord = () => {}, parentCallbackSelectedCoord = () => {} } = props;
+const CoordsList = (props: ICoordsListProps) => {
+  const { coords = [], deleteCoord = () => {}, setClickedCoordInList = () => {} } = props;
   const [filteredPriority, setFilteredPriority] = useState('All');
 
   const filterChangeHandler = (selectedPriority: string) => {
@@ -34,7 +33,7 @@ const CoordsList = (props: coordsListProps) => {
   );
 
   const onSelectCoord = (coord: { lat: number; lng: number }) => {
-    parentCallbackSelectedCoord(coord);
+    setClickedCoordInList(coord);
   };
 
   return (

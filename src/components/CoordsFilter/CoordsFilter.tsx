@@ -1,15 +1,15 @@
-import priority from '../helpers/constants.js';
-import { getPriorityColor } from '../helpers/utils.js';
+import priority from '../../helpers/constants.js';
+import { getPriorityColor } from '../../helpers/utils.js';
 import { Box, Select, InputLabel, MenuItem } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import './CoordsFilter.css';
 
-interface coordsFilterProps {
+interface ICoordsFilterProps {
   selected: string;
   onChangeFilter: (arg: string) => void;
 }
 
-const CoordsFilter = (props: coordsFilterProps) => {
+const CoordsFilter = (props: ICoordsFilterProps) => {
   const { selected = '', onChangeFilter = () => {} } = props;
 
   const dropdownChangeHandler = (event: SelectChangeEvent<string>) => {

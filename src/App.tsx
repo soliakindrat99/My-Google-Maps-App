@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import Coordinates from './components/Coordinates';
+import Coordinates from './components/Coordinates/Coordinates';
 import Map from './components/Map';
 
 import './App.css';
 
 const App: React.FC = () => {
-  const [clickedCoord, setClickedCoord] = useState<{ lat: number; lng: number } | null>(null);
-  const [selectedCoord, setSelctedCoord] = useState<{ lat: number; lng: number } | null>(null);
+  const [clickedCoordOnMap, setClickedCoordOnMap] = useState<{ lat: number; lng: number } | null>(null);
+  const [clickedCoordInList, setClickedCoordInList] = useState<{ lat: number; lng: number } | null>(null);
 
-  const handleCallbackClickedCoord = (coord: { lat: number; lng: number } | null) => {
-    setClickedCoord(coord);
+  const handleClickedCoordOnMap = (coord: { lat: number; lng: number } | null) => {
+    setClickedCoordOnMap(coord);
   };
-  const handleCallbackSelectedCoord = (coord: { lat: number; lng: number } | null) => {
-    setSelctedCoord(coord);
+  const handleClickedCoordInList = (coord: { lat: number; lng: number } | null) => {
+    setClickedCoordInList(coord);
   };
 
   return (
     <Box className="mapContainer">
       <Coordinates
-        clickedCoord={clickedCoord}
-        parentCallbackSelectedCoord={handleCallbackSelectedCoord}
+        clickedCoordOnMap={clickedCoordOnMap}
+        setClickedCoordInList={handleClickedCoordInList}
       />
-      <Map parentCallbackClickedCoord={handleCallbackClickedCoord} selectedCoord={selectedCoord} />
+      <Map setClickedCoordOnMap={handleClickedCoordOnMap} clickedCoordInList={clickedCoordInList} />
     </Box>
   );
 };
