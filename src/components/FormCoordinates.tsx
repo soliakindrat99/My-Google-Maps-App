@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import './FormCoordinates.css';
-import { getPriorityColor } from '../helpers/unils';
+import { getPriorityColor } from '../helpers/utils';
 import priority from '../helpers/constants';
 
 interface formCoordinatesProps {

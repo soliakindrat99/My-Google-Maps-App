@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getPriorityColor } from '../helpers/unils';
+import { getPriorityColor } from '../helpers/utils';
 import CoordsFilter from './CoordsFilter';
 import Coordinates from './Coordinates';
 import { Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
@@ -8,9 +8,9 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import './CoordsList.css';
 
 interface coordsListProps {
-  coords: Coordinates[],
-  deleteCoord: (arg: number) => void,
-  parentCallbackSelectedCoord: (arg: { lat: number, lng: number}  | null) => void,
+  coords: Coordinates[];
+  deleteCoord: (arg: number) => void;
+  parentCallbackSelectedCoord: (arg: { lat: number; lng: number } | null) => void;
 }
 
 const CoordsList = (props: coordsListProps) => {
@@ -43,14 +43,12 @@ const CoordsList = (props: coordsListProps) => {
       <List className="coordsList">
         {filteredCoords &&
           filteredCoords.map(
-            (
-              coord: {
-                id: number;
-                priority: string;
-                title: string;
-                coord: { lat: number; lng: number };
-              }
-            ) => {
+            (coord: {
+              id: number;
+              priority: string;
+              title: string;
+              coord: { lat: number; lng: number };
+            }) => {
               return (
                 <ListItem className="coordItem" key={coord.id}>
                   <ListItemText
