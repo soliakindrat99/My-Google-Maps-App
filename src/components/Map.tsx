@@ -55,12 +55,15 @@ const Map = (props: mapProps) => {
         <Marker
           position={{ lat: clickedCoords.lat, lng: clickedCoords.lng }}
           title={clickedCoords.lat + ', ' + clickedCoords.lng}
+          options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }}
+          visible={!selectedCoord || (clickedCoords ? true : false)}
         />
       )}
       {selectedCoord && (
         <Marker
           position={{ lat: selectedCoord.lat, lng: selectedCoord.lng }}
           title={selectedCoord.lat + ', ' + selectedCoord.lng}
+          options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' }}
         />
       )}
     </GoogleMap>
