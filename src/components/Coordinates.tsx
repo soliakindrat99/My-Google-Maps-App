@@ -9,12 +9,14 @@ interface coordinatesProps {
   parentCallbackSelectedCoord : (arg: { lat: number, lng: number}  | null) => void
 }
 
-const Coordinates = (props: coordinatesProps) => {
-  const { clickedCoord = {}, parentCallbackSelectedCoord = () => {} } = props;
+interface Coordinates {
+  id: number; priority: string; title: string; coord: { lat: number; lng: number }
+}
 
-  const [coords, setCoords] = useState<
-    { id: number; priority: string; title: string; coord: { lat: number; lng: number } }[]
-  >([
+const Coordinates = (props: coordinatesProps) => {
+  const { clickedCoord = {lat: 0, lng: 0}, parentCallbackSelectedCoord = () => {} } = props;
+
+  const [coords, setCoords] = useState<Coordinates[]>([
     { id: 1, priority: 'High', title: 'Coord 1', coord: { lat: 49.84045, lng: 24.02287 } },
     { id: 2, priority: 'Medium', title: 'Coord 2', coord: { lat: 49.84023, lng: 24.02225 } },
   ]);
@@ -25,7 +27,7 @@ const Coordinates = (props: coordinatesProps) => {
   const submitCoord = () => {
     if (newTitle && clickedCoord) {
       let num = coords.length + 1;
-      let newEntry = {
+      let newEntry: Coordinates = {
         id: num,
         priority: newPriority,
         title: newTitle,
@@ -39,12 +41,7 @@ const Coordinates = (props: coordinatesProps) => {
   const deleteCoord = (id: number) => {
     let newCoords = coords.filter(
       (
-        coord: {
-          id: number;
-          priority: string;
-          title: string;
-          coord: { lat: number; lng: number };
-        } | null
+        coord: Coordinates | null
       ) => coord !== null && coord.id !== id
     );
     setCoords(newCoords);

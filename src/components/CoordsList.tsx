@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { getPriorityColor } from '../helpers/unils';
 import CoordsFilter from './CoordsFilter';
+import Coordinates from './Coordinates';
 import { Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import './CoordsList.css';
 
 interface coordsListProps {
-  coords: { id: number; priority: string; title: string; coord: { lat: number; lng: number } }[],
+  coords: Coordinates[],
   deleteCoord: (arg: number) => void,
   parentCallbackSelectedCoord: (arg: { lat: number, lng: number}  | null) => void,
 }
