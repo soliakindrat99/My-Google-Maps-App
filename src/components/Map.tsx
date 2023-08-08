@@ -91,7 +91,6 @@ const Map = (props: IMapProps) => {
           pathCoordsFromList[1].lng
       );
       console.log('distance = ' + distance);
-      console.log(pathCoordsFromList);
     }
   }, [pathCoordsFromList]);
 
