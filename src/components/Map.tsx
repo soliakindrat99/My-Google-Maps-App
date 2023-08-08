@@ -91,6 +91,7 @@ const Map = (props: IMapProps) => {
           pathCoordsFromList[1].lng
       );
       console.log('distance = ' + distance);
+      console.log(pathCoordsFromList);
     }
   }, [pathCoordsFromList]);
 
@@ -121,7 +122,7 @@ const Map = (props: IMapProps) => {
           options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' }}
         />
       )}
-      {pathCoordsFromList.length === 2 && pathCoordsFromList[0] && pathCoordsFromList[1] ? (
+      {pathCoordsFromList.length === 2 && pathCoordsFromList[0] && pathCoordsFromList[1] && (
         <Polyline
           path={[pathCoordsFromList[0], pathCoordsFromList[1]]}
           options={{
@@ -130,8 +131,6 @@ const Map = (props: IMapProps) => {
             strokeWeight: 3,
           }}
         />
-      ) : (
-        <></>
       )}
     </GoogleMap>
   );

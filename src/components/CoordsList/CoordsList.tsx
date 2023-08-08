@@ -21,7 +21,7 @@ const CoordsList = (props: ICoordsListProps) => {
     setPathCoordsFromList = () => {},
   } = props;
   const [filteredPriority, setFilteredPriority] = useState('All');
-  const [pathCoordinates, setPathCoordinates] = useState<({ lat: number; lng: number } | null)[]>(
+  const [pathCoordinates, setPathCoordinates] = useState<({ lat: number; lng: number })[]>(
     []
   );
 
@@ -44,9 +44,7 @@ const CoordsList = (props: ICoordsListProps) => {
   const onClickCoordInList = (coord: { lat: number; lng: number }) => {
     setClickedCoordInList(coord);
     setPathCoordinates([...pathCoordinates, coord]);
-    if (pathCoordinates.length === 1) {
-      setPathCoordsFromList([...pathCoordinates, coord]);
-    } else {
+    if (pathCoordinates.length >= 1) {
       setPathCoordsFromList([pathCoordinates[pathCoordinates.length - 1], coord]);
     }
   };
