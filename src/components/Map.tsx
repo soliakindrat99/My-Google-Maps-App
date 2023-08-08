@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { GoogleMap, Marker, useLoadScript, Polyline } from '@react-google-maps/api';
 import { Box } from '@mui/material';
+import getDistanceBetweenTwoPoins from '../MathCalculations/getDistanceBetweenTwoPoins';
 
 interface IMapProps {
   setClickedCoordOnMap: (arg: { lat: number; lng: number } | null) => void;
   clickedCoordInList: { lat: number; lng: number } | null;
-  pathCoordsFromList: ({ lat: number; lng: number } | null)[];
+  pathCoordsFromList: google.maps.LatLngLiteral[];
 }
 
 const Map = (props: IMapProps) => {
@@ -41,58 +42,19 @@ const Map = (props: IMapProps) => {
     }
   };
 
-  const getDistanceBetweenCoordinates = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number => {
-    //Haversine formula a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
-    //c = 2 ⋅ atan2( √a, √(1−a) )
-    //d = R ⋅ c
-    //φ is latitude, λ is longitude, R is earth’s radius (mean radius = 6,371km);
-    //note that angles need to be in radians to pass to trig functions!
+  const splitCoordinatesIntoSegments = (coords: google.maps.LatLngLiteral[]) => {
+    const segments: google.maps.LatLngLiteral[][] = [];
+    let prevCoord: google.maps.LatLngLiteral | null = null;
 
-    const earthRadiusKm = 6371; // Radius of the Earth in kilometers
+    coords.forEach((coord) => {
+      if (prevCoord) {
+        segments.push([prevCoord, coord]);
+      }
+      prevCoord = coord;
+    });
 
-    const dLat = (lat2 - lat1) * (Math.PI / 180);
-    const dLon = (lon2 - lon1) * (Math.PI / 180);
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    const distanceKm = earthRadiusKm * c;
-    const distanceMeters = distanceKm * 1000;
-    return distanceMeters;
+    return segments;
   };
-
-  useEffect(() => {
-    if (pathCoordsFromList.length === 2 && pathCoordsFromList[0] && pathCoordsFromList[1]) {
-      const distance = getDistanceBetweenCoordinates(
-        pathCoordsFromList[0]?.lat,
-        pathCoordsFromList[0]?.lng,
-        pathCoordsFromList[1]?.lat,
-        pathCoordsFromList[1]?.lng
-      );
-      console.log(
-        'Start Coordinate - lat: ' +
-          pathCoordsFromList[0].lat +
-          ', lng: ' +
-          pathCoordsFromList[0].lng +
-          '; End Coordinate - lat: ' +
-          pathCoordsFromList[1].lat +
-          ', lng: ' +
-          pathCoordsFromList[1].lng
-      );
-      console.log('distance = ' + distance);
-    }
-  }, [pathCoordsFromList]);
 
   if (loadError) return <Box>Error loading maps</Box>;
   if (!isLoaded) return <Box>Loading...</Box>;
@@ -121,15 +83,48 @@ const Map = (props: IMapProps) => {
           options={{ icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' }}
         />
       )}
-      {pathCoordsFromList.length === 2 && pathCoordsFromList[0] && pathCoordsFromList[1] && (
-        <Polyline
-          path={[pathCoordsFromList[0], pathCoordsFromList[1]]}
-          options={{
-            strokeColor: '#6991fd',
-            strokeOpacity: 1,
-            strokeWeight: 3,
-          }}
-        />
+      {pathCoordsFromList && pathCoordsFromList.length > 1 && (
+        <>
+          <Polyline
+            path={pathCoordsFromList}
+            options={{
+              strokeColor: '#6991fd',
+              strokeOpacity: 1,
+              strokeWeight: 3,
+            }}
+          />
+          {splitCoordinatesIntoSegments(pathCoordsFromList).map((segment, index) => (
+            <Marker
+              key={index}
+              position={{
+                lat: (segment[0].lat + segment[1].lat) / 2,
+                lng: (segment[0].lng + segment[1].lng) / 2,
+              }}
+              title={
+                'Distance between (' +
+                segment[0].lat +
+                ', ' +
+                segment[0].lng +
+                ') and (' +
+                segment[1].lat +
+                ', ' +
+                segment[1].lng +
+                ')'
+              }
+              label={{
+                text: `Distance: ${getDistanceBetweenTwoPoins(
+                  segment[0].lat,
+                  segment[0].lng,
+                  segment[1].lat,
+                  segment[1].lng
+                ).toFixed(2)} m`,
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            />
+          ))}
+        </>
       )}
     </GoogleMap>
   );

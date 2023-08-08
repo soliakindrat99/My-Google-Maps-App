@@ -12,9 +12,7 @@ const App: React.FC = () => {
   const [clickedCoordInList, setClickedCoordInList] = useState<{ lat: number; lng: number } | null>(
     null
   );
-  const [pathCoordsFromList, setPathCoordsFromList] = useState<
-    ({ lat: number; lng: number } | null)[]
-  >([]);
+  const [pathCoordsFromList, setPathCoordsFromList] = useState<google.maps.LatLngLiteral[]>([]);
 
   const handleClickedCoordOnMap = (coord: { lat: number; lng: number } | null) => {
     setClickedCoordOnMap(coord);
@@ -22,7 +20,7 @@ const App: React.FC = () => {
   const handleClickedCoordInList = (coord: { lat: number; lng: number } | null) => {
     setClickedCoordInList(coord);
   };
-  const handlePathCoordsFromList = (path: ({ lat: number; lng: number } | null)[]) => {
+  const handlePathCoordsFromList = (path: google.maps.LatLngLiteral[]) => {
     setPathCoordsFromList(path);
   };
 

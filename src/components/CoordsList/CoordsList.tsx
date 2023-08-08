@@ -10,7 +10,7 @@ interface ICoordsListProps {
   coords: { id: number; priority: string; title: string; coord: { lat: number; lng: number } }[];
   deleteCoord: (arg: number) => void;
   setClickedCoordInList: (arg: { lat: number; lng: number } | null) => void;
-  setPathCoordsFromList: (arg: ({ lat: number; lng: number } | null)[]) => void;
+  setPathCoordsFromList: (arg: google.maps.LatLngLiteral[]) => void;
 }
 
 const CoordsList = (props: ICoordsListProps) => {
@@ -21,9 +21,7 @@ const CoordsList = (props: ICoordsListProps) => {
     setPathCoordsFromList = () => {},
   } = props;
   const [filteredPriority, setFilteredPriority] = useState('All');
-  const [pathCoordinates, setPathCoordinates] = useState<({ lat: number; lng: number })[]>(
-    []
-  );
+  const [pathCoordinates, setPathCoordinates] = useState<{ lat: number; lng: number }[]>([]);
 
   const filterChangeHandler = (selectedPriority: string) => {
     setFilteredPriority(selectedPriority);
@@ -45,7 +43,7 @@ const CoordsList = (props: ICoordsListProps) => {
     setClickedCoordInList(coord);
     setPathCoordinates([...pathCoordinates, coord]);
     if (pathCoordinates.length >= 1) {
-      setPathCoordsFromList([pathCoordinates[pathCoordinates.length - 1], coord]);
+      setPathCoordsFromList([...pathCoordinates, coord]);
     }
   };
 
