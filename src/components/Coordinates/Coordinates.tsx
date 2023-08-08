@@ -7,6 +7,7 @@ import './Coordinates.css';
 interface ICoordinatesProps {
   clickedCoordOnMap: { lat: number; lng: number } | null;
   setClickedCoordInList: (arg: { lat: number; lng: number } | null) => void;
+  setPathCoordsFromList: (arg: ({ lat: number; lng: number } | null) []) => void;
 }
 
 interface ICoordinates {
@@ -17,7 +18,7 @@ interface ICoordinates {
 }
 
 const Coordinates = (props: ICoordinatesProps) => {
-  const { clickedCoordOnMap = { lat: 0, lng: 0 }, setClickedCoordInList = () => {} } = props;
+  const { clickedCoordOnMap = { lat: 0, lng: 0 }, setClickedCoordInList = () => {}, setPathCoordsFromList = () => {} } = props;
 
   const [coords, setCoords] = useState<ICoordinates[]>([
     { id: 1, priority: 'High', title: 'Coord 1', coord: { lat: 49.84045, lng: 24.02287 } },
@@ -29,8 +30,8 @@ const Coordinates = (props: ICoordinatesProps) => {
 
   const submitCoord = () => {
     if (newTitle && clickedCoordOnMap) {
-      let num = coords.length + 1;
-      let newEntry: ICoordinates = {
+      const num = coords.length + 1;
+      const newEntry: ICoordinates = {
         id: num,
         priority: newPriority,
         title: newTitle,
@@ -42,7 +43,9 @@ const Coordinates = (props: ICoordinatesProps) => {
   };
 
   const deleteCoord = (id: number) => {
-    let newCoords = coords.filter((coord: ICoordinates | null) => coord !== null && coord.id !== id);
+    const newCoords = coords.filter(
+      (coord: ICoordinates | null) => coord !== null && coord.id !== id
+    );
     setCoords(newCoords);
   };
 
@@ -60,6 +63,7 @@ const Coordinates = (props: ICoordinatesProps) => {
         coords={coords}
         deleteCoord={deleteCoord}
         setClickedCoordInList={setClickedCoordInList}
+        setPathCoordsFromList={setPathCoordsFromList}
       />
     </Box>
   );

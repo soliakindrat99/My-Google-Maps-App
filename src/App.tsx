@@ -6,8 +6,15 @@ import Map from './components/Map';
 import './App.css';
 
 const App: React.FC = () => {
-  const [clickedCoordOnMap, setClickedCoordOnMap] = useState<{ lat: number; lng: number } | null>(null);
-  const [clickedCoordInList, setClickedCoordInList] = useState<{ lat: number; lng: number } | null>(null);
+  const [clickedCoordOnMap, setClickedCoordOnMap] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+  const [clickedCoordInList, setClickedCoordInList] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+  const [pathCoordsFromList, setPathCoordsFromList] = useState<
+    ({ lat: number; lng: number } | null)[]
+  >([]);
 
   const handleClickedCoordOnMap = (coord: { lat: number; lng: number } | null) => {
     setClickedCoordOnMap(coord);
@@ -15,14 +22,22 @@ const App: React.FC = () => {
   const handleClickedCoordInList = (coord: { lat: number; lng: number } | null) => {
     setClickedCoordInList(coord);
   };
+  const handlePathCoordsFromList = (path: ({ lat: number; lng: number } | null)[]) => {
+    setPathCoordsFromList(path);
+  };
 
   return (
     <Box className="mapContainer">
       <Coordinates
         clickedCoordOnMap={clickedCoordOnMap}
         setClickedCoordInList={handleClickedCoordInList}
+        setPathCoordsFromList={handlePathCoordsFromList}
       />
-      <Map setClickedCoordOnMap={handleClickedCoordOnMap} clickedCoordInList={clickedCoordInList} />
+      <Map
+        setClickedCoordOnMap={handleClickedCoordOnMap}
+        clickedCoordInList={clickedCoordInList}
+        pathCoordsFromList={pathCoordsFromList}
+      />
     </Box>
   );
 };
