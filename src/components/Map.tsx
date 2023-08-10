@@ -16,17 +16,15 @@ const Map = (props: IMapProps) => {
     pathCoordsFromList = [],
   } = props;
   const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY || '';
+  const mapId = import.meta.env.VITE_GOOGLE_MAP_ID || '';
 
   const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: apiKey,
+    mapIds: [mapId], 
+    version: 'beta'
   });
-
-  const mapContainerStyle = {
-    width: '100%',
-    height: '100vh',
-  };
 
   const center = {
     lat: 49.84023,
@@ -61,12 +59,16 @@ const Map = (props: IMapProps) => {
 
   return (
     <GoogleMap
-      mapContainerStyle={mapContainerStyle}
+      mapContainerStyle={{ width: '100%', height: '100vh' }}
       center={clickedCoords && clickedCoordInList ? clickedCoordInList : center}
       zoom={18}
+      options={{
+        mapTypeId: 'satellite',
+        heading: 90,
+        tilt: 0,
+        mapId: mapId
+      }}
       onClick={handleMapClick}
-      mapTypeId="satellite"
-      tilt={0}
     >
       {clickedCoords && (
         <Marker
